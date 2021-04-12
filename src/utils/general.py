@@ -1,6 +1,10 @@
+import base64
+import re
+import sys
+
 import numpy as np
 import plotly.graph_objects as go
-import sys
+from sklearn.preprocessing import OneHotEncoder
 
 
 def get_user_inputs():
@@ -80,3 +84,57 @@ def plot_activation_function(function, n: int, step: int = 0.5):
     except Exception as ex:
         print(f"🔴 Exception occured while getting visualizing function.\n{ex}")
         raise sys.exit(1)
+
+
+def initialize_weights(sizes: list, n_hidden: int) -> list:
+    """Initializes neural network weights
+
+    Args:
+        sizes (list): nn size
+            Example: [2, 4, 1]
+
+    Returns:
+        list: initialized weights
+            Example: [0.08333, 0.16667, ... , 1.0]
+    """
+
+    assert isinstance(sizes, list)
+
+    weights_limit = sum(x * y for x, y in zip(sizes, sizes[1:]))
+    print(f"🔍 Number of weights: {weights_limit}")
+
+    weights = [i / weights_limit for i in range(1, weights_limit + 1)]
+
+    return (
+        np.array(weights[: -n_hidden * sizes[-1]]).reshape(sizes[0], n_hidden),
+        np.array(weights[-n_hidden * sizes[-1] :]).reshape(n_hidden, sizes[-1]),
+    )
+
+
+def accuracy_score(y_true, y_pred):
+    """ Compare y_true to y_pred and return the accuracy """
+    accuracy = np.sum(y_true == y_pred, axis=0) / len(y_true)
+    return accuracy
+
+
+def normalize(X, axis=-1, order=2):
+    """ Normalize the dataset X """
+    l2 = np.atleast_1d(np.linalg.norm(X, order, axis))
+    l2[l2 == 0] = 1
+    return X / np.expand_dims(l2, axis)
+
+
+def onehot_encoding(x):
+    """ One-hot encoding of nominal values """
+    enc = OneHotEncoder(handle_unknown="ignore")
+    return enc.fit_transform(x).toarray()
+
+
+def convertImage(img_data):
+    """Save img for future prediction"""
+
+    imgstr = re.search(r"base64,(.*)", str(img_data)).group(1)
+
+    with open("images/output.png", "wb") as output:
+        output.write(base64.b64decode(imgstr))
+

@@ -5,13 +5,21 @@ from typing import Tuple
 
 class Neuron:
     def __init__(
-        self, weights: Tuple[float, ...], activation_function: str, limit: int
+        self,
+        inputs: list,
+        weights: Tuple[float, ...],
+        bias: int = 0,
+        activation_function: str = "sigmoid",
+        limit: int = 0,
     ):
         try:
             self.weights = weights
-            self.input_nodes = np.arange(1, len(weights) + 1)
+            self.input_nodes = (
+                inputs if inputs != [] else np.arange(1, len(weights) + 1)
+            )
+            self.bias = bias
             self.activation_function = getattr(self, activation_function.lower())
-            self.step_limit = limit if limit else 0
+            self.step_limit = limit
         except Exception as ex:
             print(f"🔴 Exception occured while initializing neuron.\n{ex}")
             raise sys.exit(1)
@@ -28,7 +36,6 @@ class Neuron:
 
         return 1 * (x >= self.step_limit)
 
-    # take a look at relu!?
     def linear(self, x: float) -> int:
         """Linear limited function
 
@@ -77,6 +84,6 @@ class Neuron:
         Returns:
             float: calculated neuron result -> (activation_function(input nodes sum))
         """
-        inputs_sum = np.dot(self.input_nodes, self.weights)
+        inputs_sum = np.dot(self.input_nodes, self.weights) + self.bias
         neuron_output = self.activation_function(inputs_sum)
-        return neuron_output
+        return round(neuron_output, 9)

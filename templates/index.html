@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digit recognizer - MLP</title>
+    <link rel="stylesheet" href="static/normalize.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="static/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <div class="app-info">
+        <h2 class="app-title">Digit recognizer - MLP</h2>
+        <p class="info-content">
+          <a
+            class="inner-link"
+            href="https://en.wikipedia.org/wiki/MNIST_database"
+            target="_blank"
+            ><b class="bold-text">The MNIST database</b></a
+          >
+          is a large database of handwritten digits that is commonly used for
+          training various image processing systems.
+        </p>
+        <p class="info-content">
+          This app was developed to practice: <br />
+          <b class="bold-text">creating</b> and
+          <b class="bold-text">deploying</b> models from
+          <u class="underlined-text">scratch</u>!
+        </p>
+
+        <p class="info-content">
+          To learn more you can visit:
+          <a class="inner-link" href="http://yann.lecun.com/exdb/mnist/" target="_blank"
+            ><b class="bold-text">http://yann.lecun.com/exdb/mnist/</b></a
+          >
+        </p>
+      </div>
+
+      <section class="recognizer-block">
+        <div class="canvas-box">
+
+          <div class="result-box">
+            <p>The result is: <span id="result"></span></p>
+          </div>
+
+          <canvas id="the_stage" width="100" height="100">your browser don't support canvas!</canvas>
+
+          <div class="buttons">
+            <button class="btn bfirst" onclick="clearCanvas()">Clear</button>
+            <button class="btn bsecond" name="{{ url_for('predict')}}" onclick="predict()">Recognize</button>
+          <div>
+        </div>
+        
+      </section>
+    </main>
+
+
+    
+    <script src="{{ url_for('static',filename='draw.js') }}"></script>
+  </body>
+</html>

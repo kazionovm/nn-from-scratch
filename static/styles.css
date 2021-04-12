@@ -1,0 +1,105 @@
+/* General styles */
+html,
+body {
+  overflow: hidden;
+  max-width: 100%;
+  color: #f4f4f4;
+}
+
+body {
+  width: 100%;
+  max-width: 750px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 10px;
+  margin: 0 auto;
+  padding-bottom: 10px;
+
+  overflow-x: hidden;
+
+  font-size: 16px;
+  line-height: 18px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 300;
+
+  background: #141e30; /* fallback for old browsers */
+}
+
+.container {
+  max-width: 100%;
+  margin-top: 10px;
+}
+
+/* App info */
+.app-title {
+  color: #ececec;
+}
+
+.info-content {
+  color: #f4f4f4;
+}
+
+.inner-link {
+  color: #00bcd4;
+}
+
+.bold-text {
+  font-weight: 600;
+}
+
+.underlined-text {
+  color: #ffb400;
+}
+
+.app-info {
+  border-bottom: 1px solid #effffb;
+}
+
+/* Recognizer block */
+.recognizer-block {
+  display: flex;
+  flex: wrap;
+  justify-content: start;
+}
+
+#the_stage {
+  margin: 0;
+}
+
+.canvas-box {
+  display: flexbox;
+}
+
+.result-box {
+  font-size: 20px;
+  font-weight: 600;
+  color: #e3fdfd;
+}
+
+/* Buttons */
+.btn {
+  background: none;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  font: inherit;
+  line-height: 1;
+  margin-top: 5px;
+  margin-right: 5px;
+  padding: 0.6em 2em;
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+.bfirst:hover,
+.bfirst:focus {
+  box-shadow: inset 0 0 0 2em #e84545;
+}
+
+.bsecond:hover,
+.bsecond:focus {
+  box-shadow: inset 0 0 0 2em #17b978;
+}
+
+#result {
+  color: #fc8210;
+}
