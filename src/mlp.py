@@ -1,10 +1,8 @@
 ### The goal is to build MultiLayerPerceptron
 ### An MLP consists of at least three layers of nodes: an input layer, a hidden layer and an output layer.
 
-from re import X
 from typing import Tuple
 
-import joblib
 import numpy as np
 from sklearn import datasets
 import joblib
@@ -99,6 +97,7 @@ def train():
 
 def predict_digit(X):
     clf = joblib.load("src/mlp_pretrained.pkl")
+    print(clf.predict(X))
     return np.argmax(clf.predict(X), axis=1)
 
 

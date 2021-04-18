@@ -6,6 +6,13 @@ import numpy as np
 import plotly.graph_objects as go
 from sklearn.preprocessing import OneHotEncoder
 
+from imageio import imread
+from PIL import Image
+
+from skimage.filters import threshold_mean
+from matplotlib import pyplot as plt
+import matplotlib.cm as cm
+
 
 def get_user_inputs():
     """Gets user inputs for building neuron"""
@@ -130,11 +137,43 @@ def onehot_encoding(x):
     return enc.fit_transform(x).toarray()
 
 
-def convertImage(img_data):
+def convert_image(img_data):
     """Save img for future prediction"""
 
     imgstr = re.search(r"base64,(.*)", str(img_data)).group(1)
 
     with open("images/output.png", "wb") as output:
         output.write(base64.b64decode(imgstr))
+
+
+def save_img(predicted: list):
+    plt.imsave(
+        "static/images/predicted.png", [reshape(d) for d in predicted][0], cmap=cm.gray
+    )
+
+
+def reshape(data):
+    dim = int(np.sqrt(len(data)))
+    data = np.reshape(data, (dim, dim))
+    return data
+
+
+def preprocessing(img):
+    w, h = img.shape
+    thresh = threshold_mean(img)
+    binary = img > thresh
+    shift = 2 * (binary * 1) - 1
+
+    flatten = np.reshape(shift, (w * h))
+    return flatten
+
+
+def preprocess_image(image_data, shape):
+    convert_image(image_data)
+
+    x = imread("./images/output.png", pilmode="L")
+    x = np.invert(x)
+    x = np.array(Image.fromarray(x).resize(shape))
+
+    return [preprocessing(d) for d in x.reshape(-1, shape[0], shape[1])][0]
 

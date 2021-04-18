@@ -67,7 +67,7 @@ body {
 }
 
 .canvas-box {
-  display: flexbox;
+  margin-top: 10px;
 }
 
 .result-box {
@@ -97,9 +97,22 @@ body {
 
 .bsecond:hover,
 .bsecond:focus {
+  box-shadow: inset 0 0 0 2em #169de0;
+}
+
+.bthird:hover,
+.bthird:focus {
   box-shadow: inset 0 0 0 2em #17b978;
+}
+
+img {
+  margin-left: 10px;
 }
 
 #result {
   color: #fc8210;
+}
+
+#result_box {
+  display: inline-block;
 }

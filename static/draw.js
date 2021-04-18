@@ -84,25 +84,39 @@ function isCanvasBlank(canvas) {
 }
 
 function clearCanvas() {
-  const scribbler = document.getElementById("the_stage");
-
   context.clearRect(0, 0, 300, 300);
 
   draw();
-  document.getElementById("result").innerHTML = " ";
+  document.getElementById("result_box").innerHTML = " ";
 }
 
-// var scribbler = document.getElementById("the_stage");
-
-function predict() {
+function train() {
   const button = document.querySelector(".bsecond");
   const url = button.name;
 
   const canvas = document.getElementById("the_stage");
   const image = canvas.toDataURL();
-  const result = document.getElementById("result");
 
-  console.log(`POST request was sent to ${url}`);
+  fetch(url, {
+    method: "POST",
+    body: image,
+  })
+    .then((response) => response.text())
+    .then((data) => {
+      alert(data);
+    })
+    .catch((error) => console.error("We'v got an error"));
+
+  return;
+}
+
+function predict() {
+  const button = document.querySelector(".bthird");
+  const url = button.name;
+
+  const canvas = document.getElementById("the_stage");
+  const result = document.getElementById("result_box");
+  const image = canvas.toDataURL();
 
   fetch(url, {
     method: "POST",
@@ -112,7 +126,7 @@ function predict() {
     .then((data) => {
       result.innerHTML = data;
     })
-    .catch((error) => console.error("We'v got an error"));
+    .catch((error) => alert($`We'v got an error | {error}`));
 
   return;
 }
